@@ -1,14 +1,9 @@
 package main
 
-// Declare a main function, this is the entrypoint into our go module
-// That will be run. In our example, we won't need this
+// removing the main function currently causes an error like:
+//   WebAssembly.instantiate(): Import #1 module="env" function="main.main" error: function import requires a callable
 func main() {}
 
-// This exports an add function.
-// It takes in two 32-bit integer values
-// And returns a 32-bit integer value.
-// To make this function callable from JavaScript,
-// we need to add the: "export add" comment above the function
 //export add
 func add(x int, y int) int {
 	return x + y
