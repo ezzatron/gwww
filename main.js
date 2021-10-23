@@ -11,7 +11,7 @@ while (true) {
   const currentCounter = ++counter
   const data = `${currentCounter} ${currentCounter === 1 ? 'banana' : 'bananas'}`
 
-  output.value += `Sending: ${JSON.stringify(data)}\n`
+  output.value += `Sending:  ${JSON.stringify(data)}\n`
   worker.postMessage(data)
 
   await new Promise(resolve => setTimeout(resolve, 1000))
