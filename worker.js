@@ -6,5 +6,5 @@ const modulePromise = WebAssembly.instantiateStreaming(fetch('main.wasm'), go.im
 const {instance} = await modulePromise
 go.run(instance)
 
-addEventListener('message', ({data}) => { self.dispatch(data) })
+addEventListener('message', ({data}) => { postMessageToWasm(data) })
 postMessage('__READY')

@@ -7,12 +7,12 @@ import (
 func main() {
 	self := js.Global().Get("self")
 	self.Call("postMessage", 1111)
-	self.Set("dispatch", createDispatch(self))
+	self.Set("postMessageToWasm", createPostMessage(self))
 
 	select {}
 }
 
-func createDispatch(self js.Value) js.Func {
+func createPostMessage(self js.Value) js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		self.Call("postMessage", 2222)
 		return nil
