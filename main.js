@@ -1,4 +1,4 @@
 const go = new Go()
 const {instance: {exports: {add}}} = await WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject)
 
-document.body.textContent = `Hello World! addResult: ${add(24, 24)}`
+console.log(add(2, 3), add(222, 333))
