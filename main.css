@@ -8,4 +8,5 @@ textarea {
   border: none;
   padding: 1em;
   font-family: monospace;
+  resize: none;
 }
