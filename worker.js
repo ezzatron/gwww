@@ -1,6 +1,11 @@
 import './wasm_exec.js'
 
-const go = new self.Go()
+const go = new Go()
+
+go.importObject.env = {
+  'main.postMessage': data => { postMessage(data) },
+}
+
 const modulePromise = WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject)
 
 addEventListener('message', async event => {
@@ -13,3 +18,6 @@ addEventListener('message', async event => {
     postMessage([id, error])
   }
 })
+
+const {instance} = await modulePromise
+go.run(instance)

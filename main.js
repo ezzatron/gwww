@@ -1,9 +1,7 @@
 const worker = new Worker('worker.js', {type: 'module'})
 
 worker.addEventListener('message', event => {
-  const [id, error, result] = event.data
-
-  console.log({id, result, error})
+  console.log(event.data)
 })
 
 worker.postMessage([0, 'add', 2, 3])

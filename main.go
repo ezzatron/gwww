@@ -1,8 +1,10 @@
 package main
 
-// removing the main function currently causes an error like:
-//   WebAssembly.instantiate(): Import #1 module="env" function="main.main" error: function import requires a callable
-func main() {}
+func main() {
+	postMessage(123)
+}
+
+func postMessage(data int)
 
 //export add
 func add(x int, y int) int {
