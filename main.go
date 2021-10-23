@@ -1,12 +1,20 @@
 package main
 
+import (
+	"syscall/js"
+)
+
 func main() {
-	postMessage(123)
+	self := js.Global().Get("self")
+	self.Call("postMessage", 1111)
+	self.Set("dispatch", createDispatch(self))
+
+	select {}
 }
 
-func postMessage(data int)
-
-//export add
-func add(x int, y int) int {
-	return x + y
+func createDispatch(self js.Value) js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		self.Call("postMessage", 2222)
+		return nil
+	})
 }

@@ -1,8 +1,9 @@
 const worker = new Worker('worker.js', {type: 'module'})
 
-worker.addEventListener('message', event => {
-  console.log(event.data)
+worker.addEventListener('message', ({data}) => {
+  if (data === '__READY') {
+    worker.postMessage(1234)
+  } else {
+    console.log(data)
+  }
 })
-
-worker.postMessage([0, 'add', 2, 3])
-worker.postMessage([1, 'add', 222, 333])
