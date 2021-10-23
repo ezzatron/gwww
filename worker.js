@@ -16,4 +16,4 @@ go.run(instance)
 
 removeEventListener('message', onMessageBeforeReady)
 addEventListener('message', ({data}) => { postMessageToWasm(data) })
-while (buffer.length) postMessageToWasm(buffer.shift())
+while (buffer.length > 0) postMessageToWasm(buffer.shift())
