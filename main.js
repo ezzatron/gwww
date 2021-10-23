@@ -8,7 +8,8 @@ worker.addEventListener('message', ({data}) => {
 let counter = 0
 
 while (true) {
-  const data = ++counter
+  const currentCounter = ++counter
+  const data = `${currentCounter} ${currentCounter === 1 ? 'banana' : 'bananas'}`
 
   output.value += `Sending: ${JSON.stringify(data)}\n`
   worker.postMessage(data)
