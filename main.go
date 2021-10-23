@@ -5,21 +5,30 @@ import (
 )
 
 func main() {
-	messages := make(chan js.Value)
+	inbox := make(chan js.Value)
+	outbox := make(chan js.Value)
 
 	self := js.Global().Get("self")
-	self.Set("postMessageToWasm", createPostMessage(messages))
+	self.Set("postMessageToWasm", createPostMessage(inbox))
+
+	go run(inbox, outbox)
 
 	for {
-		// echo messages back to the sender
-		self.Call("postMessage", <-messages)
+		self.Call("postMessage", <-outbox)
 	}
 }
 
-func createPostMessage(messages chan js.Value) js.Func {
+func createPostMessage(inbox chan js.Value) js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		messages <- args[0]
+		inbox <- args[0]
 
 		return nil
 	})
+}
+
+func run(inbox chan js.Value, outbox chan js.Value) {
+	for {
+		// echo messages back to the sender
+		outbox <- <-inbox
+	}
 }
