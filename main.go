@@ -5,15 +5,20 @@ import (
 )
 
 func main() {
-	self := js.Global().Get("self")
-	self.Set("postMessageToWasm", createPostMessage(self))
+	messages := make(chan js.Value)
 
-	select {}
+	self := js.Global().Get("self")
+	self.Set("postMessageToWasm", createPostMessage(messages))
+
+	for {
+		// echo messages back to the sender
+		self.Call("postMessage", <-messages)
+	}
 }
 
-func createPostMessage(self js.Value) js.Func {
+func createPostMessage(messages chan js.Value) js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		self.Call("postMessage", args[0])
+		messages <- args[0]
 
 		return nil
 	})
