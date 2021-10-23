@@ -1,12 +1,10 @@
 const buffer = []
 
-addEventListener('message', ({data}) => {
-  if (typeof postMessageToWasm === 'function') {
-    postMessageToWasm(data)
-  } else {
-    buffer.push(data)
-  }
-})
+function onMessageBeforeReady ({data}) {
+  buffer.push(data)
+}
+
+addEventListener('message', onMessageBeforeReady)
 
 import './wasm_exec.js'
 
@@ -16,4 +14,6 @@ const modulePromise = WebAssembly.instantiateStreaming(fetch('main.wasm'), go.im
 const {instance} = await modulePromise
 go.run(instance)
 
+removeEventListener('message', onMessageBeforeReady)
+addEventListener('message', ({data}) => { postMessageToWasm(data) })
 while (buffer.length) postMessageToWasm(buffer.shift())
