@@ -25,10 +25,3 @@ func createPostMessage(inbox chan js.Value) js.Func {
 		return nil
 	})
 }
-
-func run(inbox chan js.Value, outbox chan js.Value) {
-	for {
-		// echo messages back to the sender
-		outbox <- <-inbox
-	}
-}

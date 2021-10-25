@@ -1,5 +1,7 @@
-main.wasm: main.go
-	tinygo build -o main.wasm -no-debug -target wasm ./main.go
+GO_FILES := $(wildcard *.go)
+
+main.wasm: $(GO_FILES)
+	tinygo build -o main.wasm -no-debug -target wasm .
 
 wasm_exec.js:
 	cp $(shell tinygo env TINYGOROOT)/targets/wasm_exec.js "$@"
