@@ -8,4 +8,3 @@
 ## Usage
 
     make run
-
